@@ -6,4 +6,4 @@ __license__ = "GPL"
 
 # flake8: noqa
 
-import tcx
+from Tcx.tcx import Tcx

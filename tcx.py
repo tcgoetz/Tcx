@@ -14,7 +14,7 @@ logger = logging.getLogger(__file__)
 
 
 class Tcx(object):
-    """Create TCX files from data."""
+    """Read and write TCX files."""
 
     filename_regex = r'.*\.tcx'
 
@@ -30,8 +30,9 @@ class Tcx(object):
     }
     (default_prefix, default_namespace) = namespaces['tcd']
 
-    def __init__(self):
+    def __init__(self, debug=False):
         """Return and instance of the Tcx class."""
+        self.debug = debug
         self.dirty = True
 
     @classmethod
@@ -132,7 +133,7 @@ class Tcx(object):
 
     def __find_type(self, type_func, obj, xpath, default=0, namespace=default_namespace):
         try:
-            return type_func(self.__findtext(obj, xpath))
+            return type_func(self.__findtext(obj, xpath).strip())
         except Exception:
             return default
 
@@ -140,7 +141,7 @@ class Tcx(object):
         return self.__find_type(type_func, obj, xpath, None, namespace)
 
     def __tag_values(self, type_func, tag_path, namespace=default_namespace):
-        return [type_func(value.text) for value in self.__findall(self.activity, tag_path, namespace)]
+        return [type_func(value.text.strip()) for value in self.__findall(self.activity, tag_path, namespace)]
 
     def __sum_of_tag(self, type_func, tag_path, namespace=default_namespace):
         values = self.__tag_values(type_func, tag_path, namespace)
@@ -160,7 +161,8 @@ class Tcx(object):
     def update(self):
         """Recaclulate file lists."""
         self.dirty = False
-        # print(ET.dump(self.root))
+        if self.debug:
+            logger.debug(ET.dump(self.root))
         self.activity = self.__find(self.root, './/ns:Activity')
         self.creator = self.__find(self.activity, 'ns:Creator')
         self.laps = self.__find(self.activity, 'ns:Lap')
@@ -169,12 +171,12 @@ class Tcx(object):
         self.hr_values = self.__tag_values(int, './/ns:HeartRateBpm/ns:Value')
         self.cadence_values = self.__tag_values(int, './/ns:Cadence')
         self.altitude_values = self.__tag_values(float, './/ns:AltitudeMeters')
-        logger.info('creator %s root %s activity %s', self.creator, self.root, self.activity)
-        logger.info('laps (%d) %s', len(self.laps), self.laps)
-        logger.info('points (%d) %s', len(self.points), self.points)
-        logger.info('hr (%d) %s', len(self.hr_values), self.hr_values)
-        logger.info('cadence (%d) %s', len(self.cadence_values), self.cadence_values)
-        logger.info('altitude (%d) %s', len(self.altitude_values), self.altitude_values)
+        logger.debug('creator %s root %s activity %s', self.creator, self.root, self.activity)
+        logger.debug('laps (%d) %s', len(self.laps), self.laps)
+        logger.debug('points (%d) %s', len(self.points), self.points)
+        logger.debug('hr (%d) %s', len(self.hr_values), self.hr_values)
+        logger.debug('cadence (%d) %s', len(self.cadence_values), self.cadence_values)
+        logger.debug('altitude (%d) %s', len(self.altitude_values), self.altitude_values)
 
     def write(self, filename):
         """Write the TCX XML data to a file."""
@@ -183,8 +185,10 @@ class Tcx(object):
 
     def read(self, filename):
         """Update the TCX XML data from a file."""
+        logger.info('Parsing: %s', filename)
         self.tree = ET.parse(filename)
         self.root = self.tree.getroot()
+        self.update()
 
     @property
     def creator_version(self):
@@ -195,15 +199,17 @@ class Tcx(object):
 
     @property
     def creator_serialnumber(self):
-        return self.__findtext(self.creator, 'ns:UnitId')
+        return self.__findtext(self.creator, 'ns:UnitId') if self.creator is not None else None
 
     @property
     def creator_product(self):
-        return self.__findtext(self.creator, 'ns:Name')
+        return self.__findtext(self.creator, 'ns:Name') if self.creator is not None else None
 
     @property
     def sport(self):
         """Return the sport name as a string."""
+        if self.dirty:
+            self.update()
         return self.activity.attrib['Sport']
 
     @property
@@ -275,40 +281,42 @@ class Tcx(object):
 
     @property
     def start_loc(self):
-        """Return the start location of the activity as a tuple of Location instances."""
+        """Return the start location of the activity as a tuple of floats."""
         if len(self.points) > 0:
             return self.get_point_loc(self.points[0])
 
     @property
     def end_loc(self):
-        """Return the end location of the activity as a tuple of Location instances."""
+        """Return the end location of the activity as a tuple of float."""
         if len(self.points) > 0:
             return self.get_point_loc(self.points[-1])
 
     @property
     def calories(self):
         """Return the total calories recorded for the activity."""
-        return self.__sum_of_tag(int, './/ns:Lap/ns:Calories')
+        return self.__sum_of_tag(float, './/ns:Lap/ns:Calories')
 
     @property
     def distance(self):
-        """Return the total distance recorded for the activity."""
+        """Return the total distance in meters recorded for the activity."""
         return self.__sum_of_tag(float, './/ns:Lap/ns:DistanceMeters')
 
     @property
     def duration(self):
-        """Return the total duration recorded for the activity."""
+        """Return the total duration in seconds recorded for the activity."""
         return self.__sum_of_tag(float, './/ns:Lap/ns:TotalTimeSeconds')
 
     @property
     def hr_avg(self):
         """Return the average of all heart rate readings in the TCX file."""
-        return sum(self.hr_values) / len(self.hr_values)
+        if len(self.hr_values) > 0:
+            return sum(self.hr_values) / len(self.hr_values)
 
     @property
     def hr_max(self):
         """Return the maximum of all heart rate readings in the TCX file."""
-        return max(self.hr_values)
+        if len(self.hr_values) > 0:
+            return max(self.hr_values)
 
     @property
     def cadence_avg(self):

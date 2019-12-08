@@ -1,0 +1,3 @@
+Parsing: test_files/tcx/1589805465.tcx
+Parsing: test_files/tcx/1589805465.tcx
+test_files/tcx/1589805465.tcx: sport 'Other' end_time datetime.datetime(2016, 11, 26, 19, 19, 23, tzinfo=tzutc()) start_time datetime.datetime(2016, 11, 26, 17, 58, 49, tzinfo=tzutc()) product 'Microsoft Band' serial_number '0' laps 6 distance 0.0 calories 560.0 start (42.3202139, -71.4637072) end (42.320448999999996, -71.46330569999999) hr 108.56353591160222, 135 max speed 2.58 cadence None, None

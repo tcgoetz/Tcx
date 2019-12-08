@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestRead(unittest.TestCase):
-    """Class for testing FIT file parsing."""
+    """Class for testing Tcx file parsing."""
 
     @classmethod
     def setUpClass(cls):
@@ -35,6 +35,8 @@ class TestRead(unittest.TestCase):
                     "hr %r, %r max speed %r cadence %r, %r",
                     filename, tcx.sport, tcx.end_time, tcx.start_time, tcx.creator_product, tcx.creator_serialnumber, tcx.lap_count,
                     tcx.distance, tcx.calories, tcx.start_loc, tcx.end_loc, tcx.hr_avg, tcx.hr_max, tcx.speed_max, tcx.cadence_avg, tcx.cadence_max)
+        self.assertGreater(tcx.end_time, tcx.start_time)
+        self.assertGreater(tcx.lap_count, 0)
 
     def test_parse_tcx(self):
         file_names = FileProcessor.dir_to_files(self.file_path, self.tcx_filename_regex, False)

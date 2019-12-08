@@ -14,7 +14,7 @@ export PYTHON PIP
 
 
 all: deps
-	
+
 test:
 	$(MAKE) -C test
 
@@ -28,4 +28,4 @@ clean:
 	rm -f *.pyc
 	rm -rf __pycache__
 
-.PHONY: all deps remove_deps clean
+.PHONY: all deps remove_deps clean test
