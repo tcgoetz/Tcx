@@ -94,3 +94,4 @@ bin/
 .*.conf
 *.png
 test/*.txt
+my-defines.mk
