@@ -7,7 +7,7 @@ __license__ = "GPL"
 import unittest
 import logging
 
-from tcx import Tcx
+from Tcx import Tcx
 from utilities import FileProcessor
 
 

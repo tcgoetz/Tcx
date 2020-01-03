@@ -8,7 +8,7 @@ import unittest
 import logging
 import datetime
 
-from tcx import Tcx
+from Tcx import Tcx
 
 
 root_logger = logging.getLogger()

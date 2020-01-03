@@ -354,8 +354,8 @@ class Tcx(object):
         """Return the total ascent over the activity."""
         total_ascent = 0.0
         for index in range(len(self.altitude_values) - 1):
-            if self.altitude_values[index+1] > self.altitude_values[index]:
-                total_ascent += self.altitude_values[index+1] - self.altitude_values[index]
+            if self.altitude_values[index + 1] > self.altitude_values[index]:
+                total_ascent += self.altitude_values[index + 1] - self.altitude_values[index]
         return total_ascent
 
     @property
@@ -363,8 +363,8 @@ class Tcx(object):
         """Return the total descent over the activity."""
         total_descent = 0.0
         for index in range(len(self.altitude_values) - 1):
-            if self.altitude_values[index+1] < self.altitude_values[index]:
-                total_descent += self.altitude_values[index] - self.altitude_values[index+1]
+            if self.altitude_values[index + 1] < self.altitude_values[index]:
+                total_descent += self.altitude_values[index] - self.altitude_values[index + 1]
         return total_descent
 
     def __str__(self):
