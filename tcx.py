@@ -145,7 +145,7 @@ class Tcx(object):
         return self.__find_type(type_func, obj, xpath, None, namespace)
 
     def __tag_values(self, type_func, tag_path, namespace=default_namespace):
-        return [type_func(value.text.strip()) for value in self.__findall(self.activity, tag_path, namespace) if value is not None]
+        return [type_func(value.text.strip()) for value in self.__findall(self.activity, tag_path, namespace) if value.text is not None]
 
     def __sum_of_tag(self, type_func, tag_path, namespace=default_namespace):
         values = self.__tag_values(type_func, tag_path, namespace)
