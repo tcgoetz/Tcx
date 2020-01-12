@@ -263,11 +263,15 @@ class Tcx(object):
 
     def get_lap_start(self, lap):
         """Return the start time of the lap as a datetime instance."""
-        return self.get_point_time(self.get_lap_points(lap)[0])
+        lap_points = self.get_lap_points(lap)
+        if len(lap_points):
+            return self.get_point_time(lap_points[0])
 
     def get_lap_end(self, lap):
         """Return the end time of the lap as a datetime instance."""
-        return self.get_point_time(self.get_lap_points(lap)[-1])
+        lap_points = self.get_lap_points(lap)
+        if len(lap_points):
+            return self.get_point_time(lap_points[-1])
 
     def get_lap_start_loc(self, lap):
         """Return the end location of the lap as a Location instance."""
