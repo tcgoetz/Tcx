@@ -53,7 +53,7 @@ class Tcx(object):
 
     def create(self, sport, start_dt):
         """Create a new TCX file."""
-        for name, (prefix, uri) in self.namespaces.items():
+        for _, (prefix, uri) in self.namespaces.items():
             ET.register_namespace(prefix, uri)
         self.root = self.__element('TrainingCenterDatabase')
         activities = self.__subelement(self.root, 'Activities')
@@ -63,12 +63,12 @@ class Tcx(object):
 
     @classmethod
     def __namespace(cls, name):
-        (prefix, ns) = cls.namespaces[name]
+        (_, ns) = cls.namespaces[name]
         return ns
 
     @classmethod
     def __tag_with_ns(cls, name, tag):
-        (prefix, ns) = cls.namespaces[name]
+        (_, ns) = cls.namespaces[name]
         return f'{{{ns}}}{tag}'
 
     @classmethod
@@ -196,6 +196,7 @@ class Tcx(object):
 
     @property
     def creator_version(self):
+        """Return the version of the softwarte that created the TCX file as a tuple of (major, minor, build major, build minor)."""
         return (self.__find_type(int, self.creator, 'ns:Version/ns:VersionMajor'),
                 self.__find_type(int, self.creator, 'ns:Version/ns:VersionMinor'),
                 self.__find_type(int, self.creator, 'ns:Version/ns:BuildMajor'),
@@ -203,10 +204,12 @@ class Tcx(object):
 
     @property
     def creator_serialnumber(self):
+        """Return the serial number of the device that created the TCX file."""
         return self.__findtext(self.creator, 'ns:UnitId') if self.creator is not None else None
 
     @property
     def creator_product(self):
+        """Return the product name of the device that created the TCX file."""
         return self.__findtext(self.creator, 'ns:Name') if self.creator is not None else None
 
     @property
