@@ -7,7 +7,7 @@ all: deps
 test:
 	$(MAKE) -C test
 
-test_commit: test
+verify_commit: test
 
 flake8:
 	flake8 *.py --max-line-length=180 --ignore=E203,E221,E241,W503
@@ -24,4 +24,4 @@ clean:
 	rm -f *.pyc
 	rm -rf __pycache__
 
-.PHONY: all deps remove_deps clean test test_commit
+.PHONY: all deps remove_deps clean test verify_commit
