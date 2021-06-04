@@ -10,7 +10,7 @@ test:
 verify_commit: test
 
 flake8:
-	flake8 *.py --max-line-length=180 --ignore=E203,E221,E241,W503
+	$(PYTHON) -m flake8  *.py --max-line-length=180 --ignore=E203,E221,E241,W503
 
 deps:
 	$(PIP) install $(PIP_INSTALL_OPT) --upgrade --requirement requirements.txt
