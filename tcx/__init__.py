@@ -6,4 +6,8 @@ __license__ = "GPL"
 
 # flake8: noqa
 
-from Tcx.tcx import Tcx
+from .version_info import version_string
+
+__version__ = version_string()
+
+from .tcx import Tcx
