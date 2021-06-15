@@ -19,4 +19,4 @@ module_version = get_version(module_name + os.sep + 'version_info.py')
 
 setup(name=module_name, version=module_version, author='Tom Goetz', packages=[module_name], license=open('LICENSE').read(), description='Read and write Tcx format files.',
       install_requires=open('requirements.txt').readlines(),
-      python_requires=">=3.0")
+      url="https://github.com/tcgoetz/Tcx", python_requires=">=3.0")

@@ -5,7 +5,7 @@ include defines.mk
 all: deps
 
 install:
-	$(PYTHON) setup.py install
+	python3 setup.py install
 
 uninstall:
 	$(PIP) uninstall -y Tcx
@@ -16,7 +16,7 @@ test:
 verify_commit: test
 
 flake8:
-	$(PYTHON) -m flake8 tcx/*.py --max-line-length=180 --ignore=E203,E221,E241,W503
+	python3 -m flake8 tcx/*.py --max-line-length=180 --ignore=E203,E221,E241,W503
 
 deps:
 	$(PIP) install --upgrade --requirement requirements.txt
