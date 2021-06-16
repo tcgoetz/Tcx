@@ -1,8 +1,0 @@
-creator <Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Creator' at 0x106779a10> root <Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}TrainingCenterDatabase' at 0x105998050> activity <Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Activity' at 0x10676e5f0>
-laps (4) <Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Lap' at 0x106779d70>
-points (2) [<Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Trackpoint' at 0x106779f50>, <Element '{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Trackpoint' at 0x10678f3b0>]
-hr (2) [100, 100]
-cadence (0) []
-altitude (2) [100.0, 100.0]
-hr avg: 100.000000
-hr max: 100.000000

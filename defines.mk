@@ -1,30 +1,31 @@
 
 -include my-defines.mk
 
-PLATFORM=$(shell uname)
-
 #
 # Handle multiple Python installs. What python are we using?
 #
 
 ifeq ($(PLATFORM), Linux)
 
-PYTHON2=$(shell which python)
+SHELL=/usr/bin/bash
 
 else ifeq ($(PLATFORM), Darwin) # MacOS
 
-PYTHON2=$(shell which python)
+SHELL=/usr/local/bin/bash
 
 else
 
-PYTHON2=$(shell which python)
 
 endif
 
-PIP3=$(shell which pip3)
-PYTHON3=$(shell which python3)
 
-#PYTHON ?= ${PYTHON2}
+PLATFORM=$(shell uname)
+
+# PIP3=$(shell which pip3)
+PIP3=pip3
+# PYTHON3=$(shell which python3)
+PYTHON3=python3
+
 PYTHON ?= $(PYTHON3)
 PIP ?= $(PIP3)
 
