@@ -7,8 +7,8 @@ __license__ = "GPL"
 import unittest
 import logging
 
-from tcx import Tcx
-from utilities import FileProcessor
+from tcxfile import Tcx
+from idbutils import FileProcessor
 
 
 root_logger = logging.getLogger()

@@ -14,9 +14,26 @@ def get_version(version_file):
             return f'{match.group(1)}.{match.group(2)}.{match.group(3)}'
 
 
-module_name = 'tcx'
-module_version = get_version(module_name + os.sep + 'version_info.py')
+def get_long_description(readme_file):
+    """Extract long description fron the module readme."""
+    with open(readme_file, "r", encoding="utf-8") as file:
+        return file.read()
 
-setup(name=module_name, version=module_version, author='Tom Goetz', packages=[module_name], license=open('LICENSE').read(), description='Read and write Tcx format files.',
+
+module_name = 'tcxfile'
+module_version = get_version(module_name + os.sep + 'version_info.py')
+module_long_description = get_long_description('README.md')
+
+print(f"Building {module_name} {module_version}\n{module_long_description}")
+
+setup(name=module_name, version=module_version, author='Tom Goetz', packages=[module_name],
+      description='Read and write Tcx format files.',
+      long_description=module_long_description,
+      long_description_content_type='text/markdown',
       install_requires=open('requirements.txt').readlines(),
-      url="https://github.com/tcgoetz/Tcx", python_requires=">=3.0")
+      url="https://github.com/tcgoetz/Tcx",
+      classifiers=[
+          'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+          "Programming Language :: Python :: 3",
+          "Operating System :: OS Independent"],
+      python_requires=">=3.0")
