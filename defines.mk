@@ -36,5 +36,6 @@ ifeq ($(PIP),)
 $(error pip not found)
 endif
 
+MODULE=tcxfile
 
-export PLATFORM PYTHON PIP
+export MODULE PLATFORM PYTHON PIP

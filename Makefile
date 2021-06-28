@@ -1,13 +1,10 @@
+export PROJECT_BASE=$(CURDIR)
 
 include defines.mk
 
-MODULE=tcxfile
-
 all: deps
 
-dist: build
-
-publish_check: dist
+publish_check: build
 	$(PYTHON) -m twine check dist/*
 
 publish: publish_check
@@ -16,8 +13,10 @@ publish: publish_check
 build:
 	$(PYTHON) -m build
 
-install: build
-	$(PIP) install --upgrade --force-reinstall ./dist/$(MODULE)-*.whl 
+$(PROJECT_BASE)/dist/$(MODULE)-*.whl: build
+
+install: $(PROJECT_BASE)/dist/$(MODULE)-*.whl
+	$(PIP) install --upgrade --force-reinstall $(PROJECT_BASE)/dist/$(MODULE)-*.whl 
 
 uninstall:
 	$(PIP) uninstall -y $(MODULE)

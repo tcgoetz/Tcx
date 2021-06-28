@@ -20,9 +20,17 @@ def get_long_description(readme_file):
         return file.read()
 
 
+def get_requirements(requirements_file):
+    """Extract long requirements fron the module requirements.txt."""
+    print(f"Loading requirements from {requirements_file} in {os.getcwd()}")
+    with open(requirements_file, "r", encoding="utf-8") as file:
+        return file.readlines()
+
+
 module_name = 'tcxfile'
 module_version = get_version(module_name + os.sep + 'version_info.py')
 module_long_description = get_long_description('README.md')
+install_requires = get_requirements('requirements.in')
 
 print(f"Building {module_name} {module_version}")
 
@@ -30,8 +38,8 @@ setup(name=module_name, version=module_version, author='Tom Goetz', packages=[mo
       description='Read and write Tcx format files.',
       long_description=module_long_description,
       long_description_content_type='text/markdown',
-      install_requires=open('requirements.txt').readlines(),
       url="https://github.com/tcgoetz/Tcx",
+      install_requires=install_requires,
       classifiers=[
           'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
           "Programming Language :: Python :: 3",
