@@ -7,7 +7,7 @@ all: deps
 publish_check: build
 	$(PYTHON) -m twine check dist/*
 
-publish: publish_check
+publish: clean publish_check
 	$(PYTHON) -m twine upload dist/* --verbose
 
 build:
