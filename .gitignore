@@ -95,3 +95,4 @@ bin/
 *.png
 test/*.txt
 my-defines.mk
+dist
