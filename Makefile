@@ -21,6 +21,8 @@ install: $(PROJECT_BASE)/dist/$(MODULE)-*.whl
 uninstall:
 	$(PIP) uninstall -y $(MODULE)
 
+reinstall: clean uninstall install
+
 test:
 	$(MAKE) -C test
 
