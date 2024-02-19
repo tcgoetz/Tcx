@@ -54,4 +54,7 @@ clean: test_clean
 	rm -rf dist
 	rm -rf build
 
-.PHONY: all deps remove_deps clean test verify_commit install uninstall dist build publish_check publish
+merge_develop:
+	git fetch --all && git merge remotes/origin/develop
+
+.PHONY: all deps remove_deps clean test verify_commit install uninstall dist build publish_check publish merge_develop
