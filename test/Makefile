@@ -25,6 +25,6 @@ clean:
 # Targets for testing smaller slices of functionality.
 #
 $(ALL_TEST_GROUPS):
-	$(PYTHON) test_$@.py
+	$(PYTHON_PATH) test_$@.py
 
 .PHONY: all db file_parse
