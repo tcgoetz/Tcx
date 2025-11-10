@@ -59,6 +59,7 @@ test_clean:
 	$(MAKE) -C test clean
 
 clean: test_clean
+	echo "Cleaning Tcx"
 	rm -f *.pyc
 	rm -rf __pycache__
 	rm -rf *.egg-info
